@@ -116,7 +116,7 @@ LIMIT 10;
 
 --Query 5:  Write a query to join the products, orders, and orderdetails tables to have customers and products information in the same place.
 -- 
---Select customerNumber.
+
 --Compute, for each customer, the profit, which is the sum of quantityOrdered multiplied by priceEach minus buyPrice: SUM(quantityOrdered * (priceEach - buyPrice)).
 
 -- calculate most engaged customers
@@ -157,7 +157,7 @@ on c1.customerNumber = c.customerNumber
 order by profit asc
 limit 5;
 
---Query 6  How Much Can We Spend on Acquiring New Customers?
+--Query 6  Calculate average spend per customer
 
 with cte as (SELECT o.customerNumber, SUM(quantityOrdered * (priceEach - buyPrice)) AS profit
   FROM products p
@@ -182,7 +182,7 @@ Question 2:  How should we match marketing and communication strategies to custo
 - For top 5 less engaging customers, to bring them back more frequently, we can offer some incentive programs or increasing the customer interaction via email, calls and direct customer support. 
 
 Question 3: How much can we spend on acquiring new customers?
-We know that for each customer which brings us £39.039 (net profit). In order to determine how much within that CLV to spend for acquiring a new customer, it also depends on the costs of sales and marketing. 
+We know that for each customer which brings us £39039.59 (net profit). In order to determine how much within that CLV to spend for acquiring a new customer, it also depends on the costs of sales and marketing. 
 However, we can see the potential of each customer profit so we can make a business plan for getting new more customer every quarter/year/month. 
 
  */
