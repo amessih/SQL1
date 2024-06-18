@@ -96,9 +96,11 @@ SELECT 'employees' AS table_name,
 
 
   
- SELECT o.productCode, (SELECT productName FROM products as p WHERE p.productCode = o.productCode) as ProdName, round (sum(quantityOrdered)/(SELECT quantityInStock 
-																								               from products as p
-																								                where o.productCode = p.productCode  ),2) as low_stock 
+ SELECT o.productCode, 
+	(SELECT productName FROM products as p WHERE p.productCode = o.productCode) as ProdName,
+	 round (sum(quantityOrdered)/(SELECT quantityInStock from products as p where o.productCode = p.productCode  ),2) as low_stock
+					
+					 
 from orderdetails as o
 GROUP by productCode
 order by low_stock 
@@ -106,7 +108,8 @@ limit 10;
 
 -- Query 3: Write a query to compute the product performance for each product.
 
-SELECT o.productCode, sum(o.quantityOrdered *o.priceEach ) as product_performance, (SELECT productName FROM products as p WHERE p.productCode = o.productCode) as ProdName
+SELECT o.productCode, sum(o.quantityOrdered *o.priceEach ) as product_performance,
+	(SELECT productName FROM products as p WHERE p.productCode = o.productCode) as ProdName
 FROM orderdetails as o
 group by productCode 
 order by product_performance DESC
@@ -115,9 +118,11 @@ LIMIT 10;
 -- Query 4: Combine the previous queries using a Common Table Expression (CTE) to display priority products for restocking using the IN operator.
 
 
-with cte as (  SELECT o.productCode, (SELECT productName FROM products as p WHERE p.productCode = o.productCode) as ProdName, round (sum(quantityOrdered)/(SELECT quantityInStock 
-																								               from products as p
-																								                where o.productCode = p.productCode  ),2) as low_stock 
+with cte as (SELECT o.productCode, 
+	(SELECT productName FROM products as p WHERE p.productCode = o.productCode) as ProdName,
+	round (sum(quantityOrdered)/(SELECT quantityInStock from products as p where o.productCode = p.productCode  ),2) as low_stock
+					 
+					  
 from orderdetails as o
 GROUP by productCode
 having low_stock=0
@@ -125,7 +130,9 @@ having low_stock=0
 
 
 
-SELECT o.productCode, sum(o.quantityOrdered *o.priceEach ) as product_performance, (SELECT productName FROM products as p WHERE p.productCode = o.productCode) as ProdName,
+SELECT o.productCode, 
+      sum(o.quantityOrdered *o.priceEach ) as product_performance,
+	(SELECT productName FROM products as p WHERE p.productCode = o.productCode) as ProdName,
  (SELECT productLine FROM products as p WHERE p.productCode = o.productCode) as ProdLine
 FROM orderdetails as o
 where productCode in (SELECT productCode from cte)
@@ -193,7 +200,7 @@ with cte as (SELECT o.customerNumber, SUM(quantityOrdered * (priceEach - buyPric
  
  /*
  
-I have learn a lot after this project. Not only about coding, but business mindset. What have I learn from answering each question: 
+I have learnt during this project. Not only have I developed my coding skills, I've also developed a business mindset. What have I learnt from answering each question: 
 
 Question 1: Which products should we order more of or less of?
 6 out of  top 10 products that need to be restocked are classic cars. We can see this is the top performance products to keep an eye for. 
