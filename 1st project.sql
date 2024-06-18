@@ -19,7 +19,7 @@ Based on the database, I have to find out some answers for this business to deve
 Please see my queries in the SQL database I've uploaded*/
 
 
--- Query 1: counting number of columns and rows from each table in the databse
+-- Query 1: counting number of columns and rows from each table in the database
 
 
 SELECT 'Customers' AS table_name,
